@@ -74,7 +74,6 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
             ws_dioptrien: formData.wsDioptrien,
             dioptrien_stabil: formData.dioptrienStabil,
             hornhautverkruemmung: formData.hornhautverkruemmung,
-            trockene_augen: formData.trockeneAugen,
             vorerkrankung: formData.vorerkrankung,
             schwanger: formData.schwanger,
           },

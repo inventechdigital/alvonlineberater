@@ -16,8 +16,6 @@ export interface FormData {
   // Step 5 - Hornhautverkrümmung
   hornhautverkruemmung: 'ja' | 'nein' | null;
   
-  // Step 6 - Trockene Augen
-  trockeneAugen: 'ja' | 'nein' | null;
   
   // Step 7 - Alter
   alter: '18-25' | '26-45' | '46-59' | '60+' | null;
@@ -50,7 +48,7 @@ export const initialFormData: FormData = {
   akFehlsichtigkeit: null,
   dioptrienStabil: null,
   hornhautverkruemmung: null,
-  trockeneAugen: null,
+  
   alter: null,
   vorerkrankung: null,
   schwanger: null,
