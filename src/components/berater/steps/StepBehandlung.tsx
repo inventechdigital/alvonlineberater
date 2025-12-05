@@ -32,7 +32,6 @@ const StepBehandlung = ({ data, onUpdate, onNext, onBack }: StepBehandlungProps)
       wsDioptrien: null,
       dioptrienStabil: null,
       hornhautverkruemmung: null,
-      trockeneAugen: null,
       vorerkrankung: null,
       schwanger: null,
       prioritaet: null,
