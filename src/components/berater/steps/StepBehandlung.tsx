@@ -1,3 +1,4 @@
+import { useEffect, useRef } from 'react';
 import OptionCard from '../OptionCard';
 import NavigationButtons from '../NavigationButtons';
 import { FormData } from '@/types/form';
@@ -10,9 +11,35 @@ interface StepBehandlungProps {
 }
 
 const StepBehandlung = ({ data, onUpdate, onNext, onBack }: StepBehandlungProps) => {
+  const pendingNavigation = useRef(false);
+  
+  // Navigate after state has been updated
+  useEffect(() => {
+    if (pendingNavigation.current && data.behandlung) {
+      pendingNavigation.current = false;
+      const timer = setTimeout(() => onNext(), 150);
+      return () => clearTimeout(timer);
+    }
+  }, [data.behandlung, onNext]);
+
   const handleSelect = (value: 'fehlsichtig' | 'augenkrankheit') => {
-    onUpdate({ behandlung: value });
-    setTimeout(() => onNext(), 150);
+    // Reset branch-specific data when switching treatment type
+    const resetData: Partial<FormData> = {
+      behandlung: value,
+      fehlsichtigkeit: null,
+      akFehlsichtigkeit: null,
+      ksDioptrien: null,
+      wsDioptrien: null,
+      dioptrienStabil: null,
+      hornhautverkruemmung: null,
+      trockeneAugen: null,
+      vorerkrankung: null,
+      schwanger: null,
+      prioritaet: null,
+    };
+    
+    pendingNavigation.current = true;
+    onUpdate(resetData);
   };
 
   return (

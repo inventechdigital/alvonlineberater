@@ -37,6 +37,12 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
     }
   };
 
+  // Format age value: "26-45" -> "2645", "60+" -> "60"
+  const formatAge = (age: string | null): string | null => {
+    if (!age) return null;
+    return age.replace(/-/g, '').replace(/\+/g, '');
+  };
+
   const sendToN8N = async (formData: FormData) => {
     if (!N8N_WEBHOOK_URL) {
       console.warn('N8N Webhook URL nicht konfiguriert');
@@ -73,7 +79,7 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
             schwanger: formData.schwanger,
           },
           persoenlich: {
-            alter: formData.alter,
+            alter: formatAge(formData.alter),
             prioritaet: formData.prioritaet,
           },
           meta: {
