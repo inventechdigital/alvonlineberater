@@ -12,6 +12,7 @@ interface StepFehlsichtigkeitProps {
 const StepFehlsichtigkeit = ({ data, onUpdate, onNext, onBack }: StepFehlsichtigkeitProps) => {
   const handleSelect = (value: 'kurzsichtig' | 'weitsichtig') => {
     onUpdate({ fehlsichtigkeit: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

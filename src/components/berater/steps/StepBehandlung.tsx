@@ -12,6 +12,7 @@ interface StepBehandlungProps {
 const StepBehandlung = ({ data, onUpdate, onNext, onBack }: StepBehandlungProps) => {
   const handleSelect = (value: 'fehlsichtig' | 'augenkrankheit') => {
     onUpdate({ behandlung: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

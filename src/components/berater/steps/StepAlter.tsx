@@ -19,6 +19,7 @@ const StepAlter = ({ data, onUpdate, onNext, onBack }: StepAlterProps) => {
 
   const handleSelect = (value: typeof options[number]['value']) => {
     onUpdate({ alter: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

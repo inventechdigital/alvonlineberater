@@ -18,6 +18,7 @@ const StepPrioritaet = ({ data, onUpdate, onNext, onBack }: StepPrioritaetProps)
 
   const handleSelect = (value: typeof options[number]['value']) => {
     onUpdate({ prioritaet: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (
