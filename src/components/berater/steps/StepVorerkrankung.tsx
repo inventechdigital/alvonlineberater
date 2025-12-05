@@ -18,6 +18,7 @@ const StepVorerkrankung = ({ data, onUpdate, onNext, onBack }: StepVorerkrankung
 
   const handleSelect = (value: typeof options[number]['value']) => {
     onUpdate({ vorerkrankung: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

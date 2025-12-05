@@ -36,6 +36,7 @@ const StepDioptrien = ({ data, onUpdate, onNext, onBack }: StepDioptrienProps) =
     } else {
       onUpdate({ wsDioptrien: value });
     }
+    setTimeout(() => onNext(), 150);
   };
 
   return (

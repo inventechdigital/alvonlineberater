@@ -19,6 +19,7 @@ const StepAkFehlsichtigkeit = ({ data, onUpdate, onNext, onBack }: StepAkFehlsic
 
   const handleSelect = (value: typeof options[number]['value']) => {
     onUpdate({ akFehlsichtigkeit: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

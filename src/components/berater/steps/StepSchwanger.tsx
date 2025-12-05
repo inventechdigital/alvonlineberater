@@ -12,6 +12,7 @@ interface StepSchwangerProps {
 const StepSchwanger = ({ data, onUpdate, onNext, onBack }: StepSchwangerProps) => {
   const handleSelect = (value: 'ja' | 'nein') => {
     onUpdate({ schwanger: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

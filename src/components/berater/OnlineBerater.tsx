@@ -70,7 +70,11 @@ const OnlineBerater = () => {
       case 'trockene-augen':
         return 'alter';
       case 'alter':
-        return isFehlsichtig ? 'vorerkrankung' : 'schwanger';
+        // Augenkrankheit path: skip directly to PLZ (no schwanger, vorerkrankung, prioritaet)
+        if (isAugenkrankheit) {
+          return 'plz';
+        }
+        return 'vorerkrankung';
       case 'vorerkrankung':
         return 'schwanger';
       case 'schwanger':
@@ -86,6 +90,7 @@ const OnlineBerater = () => {
 
   const getPrevStep = (from: StepId): StepId | null => {
     const isFehlsichtig = formData.behandlung === 'fehlsichtig';
+    const isAugenkrankheit = formData.behandlung === 'augenkrankheit';
 
     switch (from) {
       case 'behandlung':
@@ -109,10 +114,14 @@ const OnlineBerater = () => {
       case 'vorerkrankung':
         return 'alter';
       case 'schwanger':
-        return isFehlsichtig ? 'vorerkrankung' : 'alter';
+        return 'vorerkrankung';
       case 'prioritaet':
         return 'schwanger';
       case 'plz':
+        // Augenkrankheit path: go back to alter (skip schwanger, vorerkrankung, prioritaet)
+        if (isAugenkrankheit) {
+          return 'alter';
+        }
         return 'prioritaet';
       case 'kontakt':
         return 'plz';
@@ -147,11 +156,15 @@ const OnlineBerater = () => {
   // Calculate progress
   const getProgress = (): { current: number; total: number } => {
     const isFehlsichtig = formData.behandlung === 'fehlsichtig';
-    const totalSteps = isFehlsichtig ? 12 : 9;
+    const isAugenkrankheit = formData.behandlung === 'augenkrankheit';
     
-    const stepOrder: StepId[] = isFehlsichtig
-      ? ['intro', 'behandlung', 'fehlsichtigkeit', 'dioptrien', 'dioptrien-stabil', 'hornhaut', 'trockene-augen', 'alter', 'vorerkrankung', 'schwanger', 'prioritaet', 'plz', 'kontakt']
-      : ['intro', 'behandlung', 'augenkrankheit', 'ak-fehlsichtigkeit', 'alter', 'schwanger', 'prioritaet', 'plz', 'kontakt'];
+    // Augenkrankheit: intro, behandlung, augenkrankheit, ak-fehlsichtigkeit, alter, plz, kontakt = 7 steps
+    // Fehlsichtigkeit: intro, behandlung, fehlsichtigkeit, dioptrien, dioptrien-stabil, hornhaut, trockene-augen, alter, vorerkrankung, schwanger, prioritaet, plz, kontakt = 13 steps
+    const totalSteps = isAugenkrankheit ? 6 : 12;
+    
+    const stepOrder: StepId[] = isAugenkrankheit
+      ? ['intro', 'behandlung', 'augenkrankheit', 'ak-fehlsichtigkeit', 'alter', 'plz', 'kontakt']
+      : ['intro', 'behandlung', 'fehlsichtigkeit', 'dioptrien', 'dioptrien-stabil', 'hornhaut', 'trockene-augen', 'alter', 'vorerkrankung', 'schwanger', 'prioritaet', 'plz', 'kontakt'];
     
     const currentIndex = stepOrder.indexOf(currentStep);
     return { current: Math.max(0, currentIndex), total: totalSteps };

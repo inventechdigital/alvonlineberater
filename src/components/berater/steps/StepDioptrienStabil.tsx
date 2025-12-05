@@ -12,6 +12,7 @@ interface StepDioptrienStabilProps {
 const StepDioptrienStabil = ({ data, onUpdate, onNext, onBack }: StepDioptrienStabilProps) => {
   const handleSelect = (value: 'ja' | 'nein') => {
     onUpdate({ dioptrienStabil: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

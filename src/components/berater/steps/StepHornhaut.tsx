@@ -12,6 +12,7 @@ interface StepHornhautProps {
 const StepHornhaut = ({ data, onUpdate, onNext, onBack }: StepHornhautProps) => {
   const handleSelect = (value: 'ja' | 'nein') => {
     onUpdate({ hornhautverkruemmung: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

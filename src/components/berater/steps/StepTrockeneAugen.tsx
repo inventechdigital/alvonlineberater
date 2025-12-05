@@ -12,6 +12,7 @@ interface StepTrockeneAugenProps {
 const StepTrockeneAugen = ({ data, onUpdate, onNext, onBack }: StepTrockeneAugenProps) => {
   const handleSelect = (value: 'ja' | 'nein') => {
     onUpdate({ trockeneAugen: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (

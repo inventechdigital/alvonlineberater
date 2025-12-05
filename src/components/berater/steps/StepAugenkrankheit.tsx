@@ -12,6 +12,7 @@ interface StepAugenkrankheitProps {
 const StepAugenkrankheit = ({ data, onUpdate, onNext, onBack }: StepAugenkrankheitProps) => {
   const handleSelect = (value: 'grauerstar' | 'gruenerstar' | 'sonstige') => {
     onUpdate({ fehlsichtigkeit: value });
+    setTimeout(() => onNext(), 150);
   };
 
   return (
