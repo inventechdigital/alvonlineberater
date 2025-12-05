@@ -4,6 +4,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Button } from '@/components/ui/button';
 import { FormData } from '@/types/form';
 import { z } from 'zod';
+import { toast } from 'sonner';
 
 interface StepKontaktProps {
   data: FormData;
@@ -22,6 +23,9 @@ const kontaktSchema = z.object({
   }),
 });
 
+// n8n Webhook URL - ersetze diese mit deiner echten Webhook URL
+const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || '';
+
 const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -30,6 +34,49 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
     onUpdate({ [field]: e.target.value });
     if (errors[field]) {
       setErrors((prev) => ({ ...prev, [field]: '' }));
+    }
+  };
+
+  const sendToN8N = async (formData: FormData) => {
+    if (!N8N_WEBHOOK_URL) {
+      console.warn('N8N Webhook URL nicht konfiguriert');
+      return;
+    }
+
+    try {
+      await fetch(N8N_WEBHOOK_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        mode: 'no-cors',
+        body: JSON.stringify({
+          // Kontaktdaten
+          vorname: formData.vorname,
+          nachname: formData.nachname,
+          email: formData.email,
+          telefon: formData.telefon,
+          // Formulardaten
+          behandlung: formData.behandlung,
+          fehlsichtigkeit: formData.fehlsichtigkeit,
+          akFehlsichtigkeit: formData.akFehlsichtigkeit,
+          ksDioptrien: formData.ksDioptrien,
+          wsDioptrien: formData.wsDioptrien,
+          dioptrienStabil: formData.dioptrienStabil,
+          hornhautverkruemmung: formData.hornhautverkruemmung,
+          trockeneAugen: formData.trockeneAugen,
+          alter: formData.alter,
+          vorerkrankung: formData.vorerkrankung,
+          schwanger: formData.schwanger,
+          prioritaet: formData.prioritaet,
+          plz: formData.plz,
+          // Metadaten
+          timestamp: new Date().toISOString(),
+          datenschutz_akzeptiert: formData.datenschutz,
+        }),
+      });
+    } catch (error) {
+      console.error('Fehler beim Senden an n8n:', error);
     }
   };
 
@@ -56,8 +103,11 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
     }
 
     setIsSubmitting(true);
-    // Simulate submission delay
-    await new Promise((resolve) => setTimeout(resolve, 500));
+    
+    // Sende Daten an n8n
+    await sendToN8N(data);
+    
+    toast.success('Daten erfolgreich gesendet');
     onSubmit();
   };
 
