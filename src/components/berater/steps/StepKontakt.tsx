@@ -51,28 +51,35 @@ const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => 
         },
         mode: 'no-cors',
         body: JSON.stringify({
-          // Kontaktdaten
-          vorname: formData.vorname,
-          nachname: formData.nachname,
-          email: formData.email,
-          telefon: formData.telefon,
-          // Formulardaten
-          behandlung: formData.behandlung,
-          fehlsichtigkeit: formData.fehlsichtigkeit,
-          akFehlsichtigkeit: formData.akFehlsichtigkeit,
-          ksDioptrien: formData.ksDioptrien,
-          wsDioptrien: formData.wsDioptrien,
-          dioptrienStabil: formData.dioptrienStabil,
-          hornhautverkruemmung: formData.hornhautverkruemmung,
-          trockeneAugen: formData.trockeneAugen,
-          alter: formData.alter,
-          vorerkrankung: formData.vorerkrankung,
-          schwanger: formData.schwanger,
-          prioritaet: formData.prioritaet,
-          plz: formData.plz,
-          // Metadaten
-          timestamp: new Date().toISOString(),
-          datenschutz_akzeptiert: formData.datenschutz,
+          kontakt: {
+            vorname: formData.vorname,
+            nachname: formData.nachname,
+            email: formData.email,
+            telefon: formData.telefon,
+            plz: formData.plz,
+          },
+          behandlung: {
+            typ: formData.behandlung,
+            fehlsichtigkeit: formData.fehlsichtigkeit,
+            ak_fehlsichtigkeit: formData.akFehlsichtigkeit,
+          },
+          medizinisch: {
+            ks_dioptrien: formData.ksDioptrien,
+            ws_dioptrien: formData.wsDioptrien,
+            dioptrien_stabil: formData.dioptrienStabil,
+            hornhautverkruemmung: formData.hornhautverkruemmung,
+            trockene_augen: formData.trockeneAugen,
+            vorerkrankung: formData.vorerkrankung,
+            schwanger: formData.schwanger,
+          },
+          persoenlich: {
+            alter: formData.alter,
+            prioritaet: formData.prioritaet,
+          },
+          meta: {
+            timestamp: new Date().toISOString(),
+            datenschutz_akzeptiert: formData.datenschutz,
+          },
         }),
       });
     } catch (error) {
