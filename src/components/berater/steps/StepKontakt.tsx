@@ -23,8 +23,8 @@ const kontaktSchema = z.object({
   }),
 });
 
-// n8n Webhook URL - ersetze diese mit deiner echten Webhook URL
-const N8N_WEBHOOK_URL = import.meta.env.VITE_N8N_WEBHOOK_URL || '';
+// n8n Webhook URL
+const N8N_WEBHOOK_URL = 'https://ai.inventech.digital/webhook/ob-form-submit';
 
 const StepKontakt = ({ data, onUpdate, onSubmit, onBack }: StepKontaktProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
