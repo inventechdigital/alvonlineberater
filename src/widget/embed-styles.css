@@ -1,0 +1,59 @@
+/**
+ * OnlineBerater Embed Styles
+ * 
+ * Minimal styles that work with host page styles.
+ * Uses CSS custom properties that can be overridden by the host page.
+ */
+
+/* CSS Custom Properties - can be overridden by host page */
+.onlineberater-container {
+  --ob-primary: 186 72% 38%;
+  --ob-primary-foreground: 0 0% 100%;
+  --ob-background: 210 20% 98%;
+  --ob-foreground: 220 20% 20%;
+  --ob-card: 0 0% 100%;
+  --ob-border: 214 20% 88%;
+  --ob-muted: 210 20% 96%;
+  --ob-muted-foreground: 220 10% 50%;
+  --ob-radius: 0.75rem;
+  --ob-gradient-start: 200 80% 30%;
+  --ob-gradient-end: 175 60% 50%;
+}
+
+/* Container base styles */
+.onlineberater-container {
+  font-family: inherit; /* Use host page font */
+  line-height: 1.5;
+}
+
+/* Override Tailwind's CSS variables within the container */
+.onlineberater-container {
+  --primary: var(--ob-primary);
+  --primary-foreground: var(--ob-primary-foreground);
+  --background: var(--ob-background);
+  --foreground: var(--ob-foreground);
+  --card: var(--ob-card);
+  --card-foreground: var(--ob-foreground);
+  --border: var(--ob-border);
+  --input: var(--ob-border);
+  --ring: var(--ob-primary);
+  --muted: var(--ob-muted);
+  --muted-foreground: var(--ob-muted-foreground);
+  --radius: var(--ob-radius);
+  --gradient-start: var(--ob-gradient-start);
+  --gradient-end: var(--ob-gradient-end);
+}
+
+/* Gradient header - uses container's custom properties */
+.onlineberater-container .gradient-header {
+  background: linear-gradient(135deg, hsl(var(--gradient-start)) 0%, hsl(var(--gradient-end)) 100%);
+}
+
+/* Ensure buttons and inputs work properly */
+.onlineberater-container button {
+  font-family: inherit;
+}
+
+.onlineberater-container input {
+  font-family: inherit;
+}
