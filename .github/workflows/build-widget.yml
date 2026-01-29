@@ -26,36 +26,42 @@ jobs:
       - name: Install dependencies
         run: npm ci
         
-      - name: Build widget bundle
+      - name: Build widget bundle (Shadow DOM version)
         run: npm run build
         env:
           BUILD_TARGET: widget
 
-      - name: Copy bundle to public folder (Lovable hosting)
+      - name: Build embed bundle (Native version)
+        run: npx vite build --config vite.config.embed.ts
+
+      - name: Copy bundles to public folder (Lovable hosting)
         run: |
           # Lovable serves static assets from /public in the published app
-          # Keep public/onlineberater-widget.js in sync with dist-widget output
           cp -f dist-widget/onlineberater-widget.js public/onlineberater-widget.js
+          cp -f dist-embed/onlineberater-embed.js public/onlineberater-embed.js
+          # Copy embed CSS if generated separately
+          if [ -f dist-embed/onlineberater-embed.css ]; then
+            cp -f dist-embed/onlineberater-embed.css public/onlineberater-embed.css
+          fi
           
-      - name: Commit widget bundle
+      - name: Commit widget bundles
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           
-          # Create dist-widget directory in repo if it doesn't exist
           mkdir -p dist-widget
-
-          # Ensure public directory exists (it should, but keep workflow robust)
+          mkdir -p dist-embed
           mkdir -p public
           
-          # Add the built widget file
+          # Add built files
           git add dist-widget/onlineberater-widget.js -f
-
-          # Add the copy that is hosted by Lovable at /onlineberater-widget.js
+          git add dist-embed/ -f
           git add public/onlineberater-widget.js -f
+          git add public/onlineberater-embed.js -f
+          git add public/onlineberater-embed.css -f 2>/dev/null || true
           
           # Commit only if there are changes
-          git diff --staged --quiet || git commit -m "🔧 Auto-build: Update widget bundle"
+          git diff --staged --quiet || git commit -m "🔧 Auto-build: Update widget bundles"
           
       - name: Push changes
         uses: ad-m/github-push-action@master
