@@ -14,4 +14,4 @@
 import './widget/OnlineBeraterElement';
 
 // Log registration for debugging
-console.log('OnlineBerater Web Component registered. Use <onlineberater></onlineberater> to embed.');
+console.log('OnlineBerater Web Component registered. Use <online-berater></online-berater> to embed.');
