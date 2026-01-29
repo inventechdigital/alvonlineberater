@@ -30,6 +30,12 @@ jobs:
         run: npm run build
         env:
           BUILD_TARGET: widget
+
+      - name: Copy bundle to public folder (Lovable hosting)
+        run: |
+          # Lovable serves static assets from /public in the published app
+          # Keep public/onlineberater-widget.js in sync with dist-widget output
+          cp -f dist-widget/onlineberater-widget.js public/onlineberater-widget.js
           
       - name: Commit widget bundle
         run: |
@@ -38,9 +44,15 @@ jobs:
           
           # Create dist-widget directory in repo if it doesn't exist
           mkdir -p dist-widget
+
+          # Ensure public directory exists (it should, but keep workflow robust)
+          mkdir -p public
           
           # Add the built widget file
           git add dist-widget/onlineberater-widget.js -f
+
+          # Add the copy that is hosted by Lovable at /onlineberater-widget.js
+          git add public/onlineberater-widget.js -f
           
           # Commit only if there are changes
           git diff --staged --quiet || git commit -m "🔧 Auto-build: Update widget bundle"
