@@ -74,9 +74,9 @@ class OnlineBeraterElement extends HTMLElement {
   }
 }
 
-// Register custom element
-if (!customElements.get('onlineberater')) {
-  customElements.define('onlineberater', OnlineBeraterElement);
+// Register custom element (name MUST contain a hyphen per Web Component spec)
+if (!customElements.get('online-berater')) {
+  customElements.define('online-berater', OnlineBeraterElement);
 }
 
 export default OnlineBeraterElement;
