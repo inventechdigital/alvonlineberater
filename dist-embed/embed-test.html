@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OnlineBerater Embed Test (Native)</title>
+  <style>
+    /* Host page styles - these will affect the widget */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 40px;
+      background: #f5f5f5;
+      color: #333;
+    }
+    
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .page-content {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    
+    .info-box {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    code {
+      background: #e0e0e0;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+    
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+    }
+    
+    /* Optional: Override widget colors from host page */
+    /*
+    .onlineberater-container {
+      --ob-primary: 220 70% 50%;
+      --ob-gradient-start: 220 80% 40%;
+      --ob-gradient-end: 260 60% 50%;
+    }
+    */
+  </style>
+</head>
+<body>
+  <div class="page-content">
+    <h1>OnlineBerater Native Embed Test</h1>
+    
+    <div class="info-box">
+      <h2>Verwendung (Native Embed)</h2>
+      <p>Diese Variante mountet das Widget direkt in ein DIV-Element und übernimmt die Styles der Host-Seite:</p>
+      <pre><code>&lt;!-- Mount Point --&gt;
+&lt;div id="onlineberater"&gt;&lt;/div&gt;
+
+&lt;!-- Embed Script --&gt;
+&lt;script src="https://alvonlineberater.lovable.app/onlineberater-embed.js"&gt;&lt;/script&gt;</code></pre>
+      
+      <h3>Farben anpassen</h3>
+      <p>Sie können die Farben über CSS-Variablen überschreiben:</p>
+      <pre><code>.onlineberater-container {
+  --ob-primary: 220 70% 50%;        /* Blau statt Türkis */
+  --ob-gradient-start: 220 80% 40%;
+  --ob-gradient-end: 260 60% 50%;
+}</code></pre>
+    </div>
+    
+    <!-- Widget Mount Point -->
+    <div id="onlineberater"></div>
+  </div>
+
+  <!-- Embed Script (dev mode) -->
+  <script type="module" src="/src/widget-embed.tsx"></script>
+</body>
+</html>
