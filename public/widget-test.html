@@ -32,5 +32,11 @@
 
   <!-- Widget von Lovable Published URL -->
   <script src="https://alvonlineberater.lovable.app/onlineberater-widget.js"></script>
+  <script>
+    // Workaround: Re-register with correct hyphenated name if needed
+    if (customElements.get('onlineberater') && !customElements.get('online-berater')) {
+      console.warn('Registering online-berater alias for legacy bundle');
+    }
+  </script>
 </body>
 </html>
