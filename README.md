@@ -1,4 +1,6 @@
-# Welcome to your Lovable project
+# ALV OnlineBerater
+
+Ein interaktiver Online-Berater für Augenlaser-Behandlungen.
 
 ## Project info
 
