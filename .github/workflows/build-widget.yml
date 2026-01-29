@@ -1,0 +1,52 @@
+name: Build Widget
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-widget:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build widget bundle
+        run: npm run build
+        env:
+          BUILD_TARGET: widget
+          
+      - name: Commit widget bundle
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          
+          # Create dist-widget directory in repo if it doesn't exist
+          mkdir -p dist-widget
+          
+          # Add the built widget file
+          git add dist-widget/onlineberater-widget.js -f
+          
+          # Commit only if there are changes
+          git diff --staged --quiet || git commit -m "🔧 Auto-build: Update widget bundle"
+          
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
