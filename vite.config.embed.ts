@@ -29,11 +29,6 @@ export default defineConfig({
       },
     },
     cssCodeSplit: false,
-    minify: 'terser',
-    terserOptions: {
-      compress: {
-        drop_console: false,
-      },
-    },
+    minify: 'esbuild',
   },
 });
